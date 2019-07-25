@@ -44,7 +44,7 @@ class Cliente
     private $usuario;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Direccion", mappedBy="cliente", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Direccion", mappedBy="cliente", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $direcciones;
 
@@ -126,23 +126,23 @@ class Cliente
         return $this->direcciones;
     }
 
-    public function addDireccione(Direccion $direccione): self
+    public function addDireccion(Direccion $direccion): self
     {
-        if (!$this->direcciones->contains($direccione)) {
-            $this->direcciones[] = $direccione;
-            $direccione->setCliente($this);
+        if (!$this->direcciones->contains($direccion)) {
+            $this->direcciones[] = $direccion;
+            $direccion->setCliente($this);
         }
 
         return $this;
     }
 
-    public function removeDireccione(Direccion $direccione): self
+    public function removeDireccion(Direccion $direccion): self
     {
-        if ($this->direcciones->contains($direccione)) {
-            $this->direcciones->removeElement($direccione);
+        if ($this->direcciones->contains($direccion)) {
+            $this->direcciones->removeElement($direccion);
             // set the owning side to null (unless already changed)
-            if ($direccione->getCliente() === $this) {
-                $direccione->setCliente(null);
+            if ($direccion->getCliente() === $this) {
+                $direccion->setCliente(null);
             }
         }
 
